@@ -1,34 +1,30 @@
-/* .header {
-    background-color: #5a67d8;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-   */
+:root {
+    --primary-color: #FFA500;
+    --secondary-color: #0084ff;
+    --header-bg: #0084ff;
+    --header-text-color: white;
+    --header-height: 50px;
+}
 
-   .header {
-    background-color: #5a67d8;
-    color: white;
+.header {
+    background-color: var(--header-bg);
+    color: var(--header-text-color);
     text-align: center;
-    padding: 10px 0; /* Reduce padding to minimize height */
+    padding: 10px 0;
     font-size: 1.2rem;
     font-weight: bold;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw; /* Ensure it spans the full screen */
-    height: 50px; /* Adjust height to be ≤2cm */
+    width: 100vw; 
+    height: var(--header-height);
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
     z-index: 1000;
-    border-radius: 0; /* Removes any unwanted curvature */
-    overflow: hidden; /* Prevents extra spacing */
+    border-radius: 0;
+    overflow: hidden;
 }
 
 .header h1 {
