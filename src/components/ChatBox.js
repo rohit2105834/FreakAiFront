@@ -39,7 +39,6 @@ const ChatBox = () => {
     setLoading(false);
   };
 
-  // Function to format the response dynamically
   const formatResponse = (text) => {
     return text
       .replace(/\*\*(.*?)\*\*/g, "**$1**") // Bold text
@@ -49,22 +48,51 @@ const ChatBox = () => {
   };
 
   // Simulated typing effect
+  // const simulateTyping = (text) => {
+  //   let index = 0;
+  //   const typingInterval = setInterval(() => {
+  //     if (index < text.length) {
+  //       setMessages((prev) => [
+  //         ...prev.slice(0, -1),
+  //         { text: prev[prev.length - 1].text + text[index], sender: "bot" },
+  //       ]);
+  //       index++;
+  //     } else {
+  //       clearInterval(typingInterval);
+  //     }
+  //   }, 30);
+
+  //   setMessages((prev) => [...prev, { text: "", sender: "bot" }]);
+  // };
+
   const simulateTyping = (text) => {
     let index = 0;
-    const typingInterval = setInterval(() => {
-      if (index < text.length) {
-        setMessages((prev) => [
-          ...prev.slice(0, -1),
-          { text: prev[prev.length - 1].text + text[index], sender: "bot" },
-        ]);
-        index++;
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 30);
-
+  
+    // Start with an empty bot message
     setMessages((prev) => [...prev, { text: "", sender: "bot" }]);
+  
+    const typingInterval = setInterval(() => {
+      setMessages((prev) => {
+        if (prev.length === 0) return prev; // Safety check
+  
+        const lastMessage = prev[prev.length - 1];
+  
+        if (!lastMessage || lastMessage.sender !== "bot") return prev;
+  
+        // Ensure correct slicing
+        const updatedText = text.slice(0, index + 1);
+  
+        if (index < text.length - 1) {
+          index++;
+          return [...prev.slice(0, -1), { text: updatedText, sender: "bot" }];
+        } else {
+          clearInterval(typingInterval);
+          return [...prev.slice(0, -1), { text, sender: "bot" }]; // Final correction to avoid extra characters
+        }
+      });
+    }, 30);
   };
+  
 
   // Handle Enter key press
   const handleKeyDown = (e) => {
